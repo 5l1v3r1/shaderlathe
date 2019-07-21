@@ -3,12 +3,12 @@ shader_id RAYMARCH
 #version 430
 layout(location = 0) out vec4 out_color;
 layout(location = 1) uniform vec4 parameters;
-layout(location = 2) uniform sampler2D tex;
+layout(location = 2) uniform float time;
+layout(location = 3) uniform sampler2D tex;
 in vec2 ftexcoord;
 uniform float crap;//-1. 30.0 1.1
 float xres = parameters.x;
 float yres = parameters.y;
-float time = parameters.z;
 
 float Pi = 3.1415296;
 #define INF 100000.0
@@ -68,9 +68,9 @@ float sdCross( in vec3 p )
 
 float scene(vec3 p)
 {
-	p = rotatex(p, 0.18*parameters.z);
-	p = rotatez(p, 0.20*parameters.z);
-	p = rotatey(p, 0.22*parameters.z);
+	p = rotatex(p, 0.18*time);
+	p = rotatez(p, 0.20*time);
+	p = rotatey(p, 0.22*time);
 
 	float d0 = length(max(abs(p) - 0.5, 0.0)) - 0.0 + clamp(sin((p.x +p.y + p.z)*crap)
 	*0.03, 0.0, 1.0);
@@ -158,11 +158,11 @@ shader_id POST1
 #version 430
 layout(location = 0) out vec4 out_color;
 layout(location = 1) uniform vec4 parameters;
-layout(location = 2) uniform sampler2D tex;
+layout(location = 2) uniform float time;
+layout(location = 3) uniform sampler2D tex;
 in vec2 ftexcoord;
 float xres = parameters.x;
 float yres = parameters.y;
-float time = parameters.z;
 uniform float sepia_level;//0.00 1.00 0.01
 
 

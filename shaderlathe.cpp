@@ -372,6 +372,8 @@ GLuint init_rendertexture(int resx, int resy)
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, resx, resy, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     return texture;
@@ -392,6 +394,8 @@ FBOELEM init_fbo(int width, int height, bool fp)
     glBindTexture(GL_TEXTURE_2D, elem.texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexImage2D(GL_TEXTURE_2D, 0, fp ? GL_RGB32F : GL_RGBA8, width, height, 0, GL_RGBA, fp ? GL_FLOAT : GL_UNSIGNED_BYTE, NULL);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, elem.texture, 0);
     // check if everything was ok with our requests above.
@@ -474,14 +478,14 @@ GLuint loadTexMemory(unsigned char* data2, int size) {
     return tex;
 }
 
-void draw(float time, shader_id program, int xres, int yres, GLuint texture) {
+void draw(float time, shader_id program, int tex_width, int tex_height, GLuint texture) {
     glBindProgramPipeline(program.pid);
-    glViewport(0, 0, xres, yres);
+    glViewport(0, 0, tex_width, tex_height);
     if (texture)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
-        glProgramUniform1i(program.fsid, 2, 0);
+        glProgramUniform1i(program.fsid, 3, 0);
     }
     for (int i = 0; i < 4; i++)
     {
@@ -490,10 +494,14 @@ void draw(float time, shader_id program, int xres, int yres, GLuint texture) {
         TCHAR pathz[MAX_PATH] = { 0 };
         sprintf(pathz, "tex%d", i);
         int uniform_loc = glGetUniformLocation(program.fsid, pathz);
-        glProgramUniform1i(program.fsid, uniform_loc, 1 + i);
+        glProgramUniform1i(program.fsid, uniform_loc, 3 + i);
     }
-    float fparams[4] = { xres, yres, time, 0.0 };
+	RECT view_widthheight;
+	HWND hand = FindWindow("Shader Lathe", NULL);
+	GetClientRect(hand, &view_widthheight);
+    float fparams[4] = { tex_width, tex_height, view_widthheight.right, view_widthheight.bottom };
     glProgramUniform4fv(program.fsid, 1, 1, fparams);
+	glProgramUniform1f(program.fsid,2,time);
     for (int i = 0; i < shaderconfig_map.size(); i++)
     {
         if (shaderconfig_map[i].program_num = program.pid)
