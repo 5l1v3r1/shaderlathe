@@ -164,7 +164,7 @@ vec2 crt(vec2 coord, float bend)
 void main(void)
 {
     vec2 uv = gl_FragCoord.xy / parameters.xy;
-	vec2 p=-1.0+2.0*crt(uv, 2.0);
+	vec2 p=crt(uv, 2.0);
     vec2 uv_q = crt(uv, 2.0);
 	vec2 uv_n = uv_q;
     mat3 rgbtoyuv = mat3(0.299, -0.147,  0.615, 0.587, -0.289, -0.515, 0.114, 0.436, -0.100);
