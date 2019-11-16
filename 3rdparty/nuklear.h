@@ -7703,7 +7703,7 @@ nk_color_u32(struct nk_color in)
 NK_API void
 nk_color_f(float *r, float *g, float *b, float *a, struct nk_color in)
 {
-    NK_STORAGE const float s = 1.0f/255.0f;
+    const float s = 1.0f/255.0f;
     *r = (float)in.r * s;
     *g = (float)in.g * s;
     *b = (float)in.b * s;
@@ -7724,7 +7724,7 @@ nk_color_cf(struct nk_color in)
 NK_API void
 nk_color_d(double *r, double *g, double *b, double *a, struct nk_color in)
 {
-    NK_STORAGE const double s = 1.0/255.0;
+    const double s = 1.0/255.0;
     *r = (double)in.r * s;
     *g = (double)in.g * s;
     *b = (double)in.b * s;
