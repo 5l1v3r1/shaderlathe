@@ -190,9 +190,9 @@ static void xpause(void* data, int flag)
 static void xset_row(void* data, int row)
 {
     int newtime_ms = row_to_ms_round(row, rps);
-    sceneTime = newtime_ms;
-    if (BASS_ChannelIsActive(music_stream) != BASS_ACTIVE_STOPPED)
-        BASS_ChannelSetPosition(music_stream, BASS_ChannelSeconds2Bytes(music_stream, sceneTime), BASS_POS_BYTE);
+    if(paused)sceneTime = newtime_ms;
+	if (BASS_ChannelIsActive(music_stream) != BASS_ACTIVE_STOPPED && paused)
+        BASS_ChannelSetPosition(music_stream, BASS_ChannelSeconds2Bytes(music_stream, newtime_ms), BASS_POS_BYTE);
     (void)data;
 }
 
@@ -541,7 +541,7 @@ void PezUpdate(unsigned int elapsedMilliseconds) {
             return;
         }
         if (!paused)
-            sceneTime += elapsedMilliseconds * 0.001;
+           sceneTime += elapsedMilliseconds * 0.001;
     }
 }
 
@@ -753,6 +753,11 @@ void gui()
                 seek = nk_slider_float(ctx, 0, (float*)&sceneTime, time, 0.1);
                 if (seek)
                 {
+					if (rocket_connected)
+					{
+						float row_f = ms_to_row_f(sceneTime, rps);
+						sync_update(device, (int)floor(row_f), &cb, 0);
+					}
                     BASS_ChannelSetPosition(
                         music_stream,
                         BASS_ChannelSeconds2Bytes(music_stream, sceneTime),
