@@ -32,6 +32,12 @@
     <ClInclude Include="3rdparty\gb_math.h" />
     <ClInclude Include="3rdparty\gl3w.h" />
     <ClInclude Include="3rdparty\glcorearb.h" />
+    <ClInclude Include="3rdparty\imgui\imconfig.h" />
+    <ClInclude Include="3rdparty\imgui\imgui.h" />
+    <ClInclude Include="3rdparty\imgui\imgui_internal.h" />
+    <ClInclude Include="3rdparty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="3rdparty\imgui\imstb_textedit.h" />
+    <ClInclude Include="3rdparty\imgui\imstb_truetype.h" />
     <ClInclude Include="3rdparty\nuklear.h" />
     <ClInclude Include="3rdparty\nuklear_pez_gl3.h" />
     <ClInclude Include="3rdparty\pez.h" />
@@ -41,6 +47,9 @@
     <ClInclude Include="3rdparty\rocket\track.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\imgui\imgui.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="3rdparty\pez.windows.c" />
     <ClCompile Include="3rdparty\rocket\device.c" />
     <ClCompile Include="3rdparty\rocket\track.c" />

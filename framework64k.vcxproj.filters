@@ -7,6 +7,9 @@
     <Filter Include="3rdparty\gnurocket">
       <UniqueIdentifier>{7f312c4a-b889-4e84-9998-89e15b556ef7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty\imgui">
+      <UniqueIdentifier>{cfcc7356-0d5d-43d8-9fa6-f0c6f293d168}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdparty\dr.h">
@@ -45,6 +48,24 @@
     <ClInclude Include="3rdparty\rocket\track.h">
       <Filter>3rdparty\gnurocket</Filter>
     </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imgui.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imconfig.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imgui_internal.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imstb_rectpack.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imstb_textedit.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imstb_truetype.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="shaderlathe.cpp" />
@@ -56,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="3rdparty\rocket\track.c">
       <Filter>3rdparty\gnurocket</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui\imgui.cpp">
+      <Filter>3rdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp">
+      <Filter>3rdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui\imgui_draw.cpp">
+      <Filter>3rdparty\imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
