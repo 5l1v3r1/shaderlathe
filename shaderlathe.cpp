@@ -743,38 +743,37 @@ void gui()
             {
                 system("cls");
             }
-            if (BASS_ChannelIsActive(music_stream) != BASS_ACTIVE_STOPPED)
-            {
-                nk_layout_row_dynamic(ctx, 25, 1);
-                char label1[100] = { 0 };
-                sprintf(label1, "Progress: %.2f / %.2f seconds", sceneTime, time);
-                nk_label(ctx, label1, NK_TEXT_LEFT);
-                nk_layout_row_static(ctx, 30, 500, 2);
-                seek = nk_slider_float(ctx, 0, (float*)&sceneTime, time, 0.1);
-                if (seek)
-                {
+			{
+				int max = 300;
+				nk_layout_row_dynamic(ctx, 25, 1);
+				char label1[100] = { 0 };
+				bool isaudioplaying = (BASS_ChannelIsActive(music_stream) != BASS_ACTIVE_STOPPED);
+				if (isaudioplaying)
+					sprintf(label1, "Progress: %.2f / %.2f seconds", sceneTime, time);
+				else
+					sprintf(label1, "Progress: %.2f seconds", sceneTime);
+				nk_label(ctx, label1, NK_TEXT_LEFT);
+				nk_layout_row_static(ctx, 30, 500, 2);
+				if (isaudioplaying)
+					seek = nk_slider_float(ctx, 0, (float*)&sceneTime, time, 0.1);
+				else
+					seek = nk_slider_float(ctx, 0, (float*)&sceneTime, max, 0.1);
+				if (seek)
+				{
 					if (rocket_connected)
 					{
 						float row_f = ms_to_row_f(sceneTime, rps);
 						sync_update(device, (int)floor(row_f), &cb, 0);
 					}
-                    BASS_ChannelSetPosition(
-                        music_stream,
-                        BASS_ChannelSeconds2Bytes(music_stream, sceneTime),
-                        BASS_POS_BYTE
-                    );
-                }
-            }
-            else
-            {
-                int max = 300;
-                nk_layout_row_dynamic(ctx, 25, 1);
-                char label1[100] = { 0 };
-                sprintf(label1, "Progress: %.2f seconds", sceneTime);
-                nk_label(ctx, label1, NK_TEXT_LEFT);
-                nk_layout_row_static(ctx, 30, 500, 2);
-                seek = nk_slider_float(ctx, 0, (float*)&sceneTime, max, 0.1);
-            }
+					if (isaudioplaying)
+						BASS_ChannelSetPosition(
+							music_stream,
+							BASS_ChannelSeconds2Bytes(music_stream, sceneTime),
+							BASS_POS_BYTE
+						);
+				}
+			}
+				
         }
         nk_end(ctx);
         //uniform widget
@@ -936,5 +935,5 @@ const char* PezInitialize(int width, int height)
 	free(data);
         
     render_fbo = init_fbo(render_width, render_height, false);
-    return "Shader Lathe v0.4";
+    return "Shader Lathe v0.5";
 }
