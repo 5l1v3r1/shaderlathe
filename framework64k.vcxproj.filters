@@ -27,15 +27,6 @@
     <ClInclude Include="3rdparty\glcorearb.h">
       <Filter>3rdparty</Filter>
     </ClInclude>
-    <ClInclude Include="3rdparty\pez.h">
-      <Filter>3rdparty</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\nuklear_pez_gl3.h">
-      <Filter>3rdparty</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\nuklear.h">
-      <Filter>3rdparty</Filter>
-    </ClInclude>
     <ClInclude Include="3rdparty\rocket\base.h">
       <Filter>3rdparty\gnurocket</Filter>
     </ClInclude>
@@ -66,12 +57,14 @@
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h">
       <Filter>3rdparty\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imgui_impl_win32.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui\imgui_impl_opengl3.h">
+      <Filter>3rdparty\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="shaderlathe.cpp" />
-    <ClCompile Include="3rdparty\pez.windows.c">
-      <Filter>3rdparty</Filter>
-    </ClCompile>
     <ClCompile Include="3rdparty\rocket\device.c">
       <Filter>3rdparty\gnurocket</Filter>
     </ClCompile>
@@ -85,6 +78,16 @@
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="3rdparty\imgui\imgui_draw.cpp">
+      <Filter>3rdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui\imgui_impl_win32.cpp">
+      <Filter>3rdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui\imgui_impl_opengl3.cpp">
+      <Filter>3rdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_demo.cpp">
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
   </ItemGroup>

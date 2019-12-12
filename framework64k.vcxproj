@@ -34,13 +34,12 @@
     <ClInclude Include="3rdparty\glcorearb.h" />
     <ClInclude Include="3rdparty\imgui\imconfig.h" />
     <ClInclude Include="3rdparty\imgui\imgui.h" />
+    <ClInclude Include="3rdparty\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="3rdparty\imgui\imgui_impl_win32.h" />
     <ClInclude Include="3rdparty\imgui\imgui_internal.h" />
     <ClInclude Include="3rdparty\imgui\imstb_rectpack.h" />
     <ClInclude Include="3rdparty\imgui\imstb_textedit.h" />
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h" />
-    <ClInclude Include="3rdparty\nuklear.h" />
-    <ClInclude Include="3rdparty\nuklear_pez_gl3.h" />
-    <ClInclude Include="3rdparty\pez.h" />
     <ClInclude Include="3rdparty\rocket\base.h" />
     <ClInclude Include="3rdparty\rocket\device.h" />
     <ClInclude Include="3rdparty\rocket\sync.h" />
@@ -48,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdparty\imgui\imgui.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_demo.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="3rdparty\pez.windows.c" />
     <ClCompile Include="3rdparty\rocket\device.c" />
     <ClCompile Include="3rdparty\rocket\track.c" />
-    <ClCompile Include="shaderlathe.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{91B645FD-82AF-44D4-9D0A-CD74BC0CAC3C}</ProjectGuid>
