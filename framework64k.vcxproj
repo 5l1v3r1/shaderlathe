@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdparty\imgui\imgui.cpp" />
-    <ClCompile Include="3rdparty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_demo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="3rdparty\imgui\imgui_draw.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_impl_win32.cpp" />
@@ -55,6 +57,7 @@
     <ClCompile Include="3rdparty\rocket\device.c" />
     <ClCompile Include="3rdparty\rocket\track.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="shaderlathe_2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{91B645FD-82AF-44D4-9D0A-CD74BC0CAC3C}</ProjectGuid>

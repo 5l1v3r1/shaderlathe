@@ -90,5 +90,6 @@
     <ClCompile Include="3rdparty\imgui\imgui_demo.cpp">
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="shaderlathe_2.cpp" />
   </ItemGroup>
 </Project>

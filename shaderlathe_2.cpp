@@ -1,9 +1,7 @@
-#include "3rdparty/pez.h"
+
 #include "3rdparty/gl3w.h"
 #define DR_FSW_IMPLEMENTATION
 #include "3rdparty/dr_fsw.h"
-#include "3rdparty/nuklear.h"
-#include "3rdparty/nuklear_pez_gl3.h"
 #include "3rdparty/bass.h"
 #pragma comment (lib,"bass.lib")
 #include <stdlib.h>
@@ -24,6 +22,10 @@
 #include <io.h>
 #include <objidl.h>
 #include <gdiplus.h>
+
+#include "3rdparty/imgui/imgui.h"
+#include "3rdparty/imgui/imgui_impl_win32.h"
+#include "3rdparty/imgui/imgui_impl_opengl3.h"
 
 using namespace Gdiplus;
 using namespace std;
@@ -688,7 +690,7 @@ char *get_file(void) {
     if (!GetOpenFileName(&ofn)) return NULL;
     return filename;
 }
-
+/*
 void gui()
 {
 	static int state = 0;
@@ -831,6 +833,91 @@ void gui()
         }
         nk_end(ctx);
     }
+}  */
+
+
+void gui2()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+	{
+		static float f = 0.0f;
+		static int counter = 0;
+
+		ImGui::Begin("Toolbox");                          // Create a window called "Hello, world!" and append into it.
+
+
+		ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+		if (ImGui::BeginTabBar("Uniforms", tab_bar_flags))
+		{
+
+			if (ImGui::BeginTabItem("Timeline"))
+			{
+				static float  u32_min = 0;
+				static float u32_max = 512.0;
+				ImGui::SliderScalar("Progress", ImGuiDataType_Float, &sceneTime, &u32_min, &u32_max, "%.02f");
+
+				static int clicked = 0;
+				if (ImGui::Button("Load"))
+				{
+
+
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Pause"))
+				{
+
+
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Rewind"))
+				{
+					sceneTime = 0;
+
+				}
+
+				ImGui::EndTabItem();
+			}
+
+			if (ImGui::BeginTabItem("Raymarch uniforms"))
+			{
+				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+
+				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+					counter++;
+				ImGui::SameLine();
+				ImGui::Text("counter = %d", counter);
+
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Post-process uniforms"))
+			{
+				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+
+				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+					counter++;
+				ImGui::SameLine();
+				ImGui::Text("counter = %d", counter);
+
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
+		}
+
+
+
+		ImGui::End();
+	}
 }
 
 void PezRender()
@@ -857,17 +944,16 @@ void PezRender()
         if (raymarch_shader.compiled)
             draw(sceneTime, raymarch_shader, render_width, render_height, NULL);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        draw(sceneTime, post_shader, PEZ_VIEWPORT_WIDTH, PEZ_VIEWPORT_HEIGHT, render_fbo.texture);
+        draw(sceneTime, post_shader, 1280, 720, render_fbo.texture);
     }
     else
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0, 0.0, 0.0, 1.0f);
         if (raymarch_shader.compiled)
-            draw(sceneTime, raymarch_shader, PEZ_VIEWPORT_WIDTH, PEZ_VIEWPORT_HEIGHT, NULL);
+            draw(sceneTime, raymarch_shader, 1280, 720, NULL);
     }
-    gui();
-    nk_pez_render(NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+    gui2();
 }
 
 
@@ -881,7 +967,7 @@ TCHAR* lut_files[]
   "tex19.png"
 };
 
-const char* PezInitialize(int width, int height)
+int PezInitialize(int width, int height)
 {
     GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR           gdiplusToken;
@@ -935,5 +1021,5 @@ const char* PezInitialize(int width, int height)
 	free(data);
         
     render_fbo = init_fbo(render_width, render_height, false);
-    return "Shader Lathe v0.5";
+    return 1;
 }
